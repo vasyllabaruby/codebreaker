@@ -22,13 +22,13 @@ module Codebreaker
       @secret_code = secret_code.chars
       @result = []
       check
-      result
+      result.join
     end
 
     private
 
     def check
-      return @result = '++++ (win)' if @user_code == @secret_code
+      return @result = ['++++ (win)'] if @user_code == @secret_code
 
       check_in_same_position
       check_in_different_position
@@ -46,8 +46,12 @@ module Codebreaker
     end
 
     def check_in_different_position
-      @secret_code.each do |el|
-        @result << '-' if @user_code.include? el
+      @secret_code.each_with_index do |el, index|
+        if @user_code.include? el
+          @user_code[@user_code.index(el)] = 0
+          @secret_code[index] = -1
+          @result << '-'
+        end
       end
     end
   end
