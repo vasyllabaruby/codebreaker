@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe Codebreaker do
-
   it 'has a version number' do
     expect(Codebreaker::VERSION).not_to be nil
   end
@@ -11,7 +10,7 @@ RSpec.describe Codebreaker do
     expect(game).to be_instance_of(Codebreaker::Main)
   end
 
-  context "#play" do
+  context '#play' do
     let(:game) { Codebreaker::Main.new }
     it 'Codebreaker game test 1' do
       result = game.play('6543', '5643')
@@ -60,8 +59,7 @@ RSpec.describe Codebreaker do
   end
   context '.valid?' do
     it 'Validate service test' do
-      expect{ Codebreaker.valid?(1237) }.to raise_error RegexpError
+      expect { Codebreaker.valid?(1237) }.to raise_error RegexpError
     end
   end
-
 end

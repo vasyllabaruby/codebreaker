@@ -1,5 +1,4 @@
 
-
 RSpec.describe 'SecretCode' do
   let(:code) { Codebreaker::SecretCode.new('1111') }
 
