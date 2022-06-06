@@ -12,7 +12,7 @@ RSpec.describe Codebreaker do
   end
 
   context "#play" do
-    game = Codebreaker::Main.new
+    let(:game) { Codebreaker::Main.new }
     it 'Codebreaker game test 1' do
       result = game.play('6543', '5643')
       expect(result).to eq('++--')
@@ -56,6 +56,11 @@ RSpec.describe Codebreaker do
     it 'Codebreaker game test 11' do
       result = game.play('1234', '1234')
       expect(result).to eq('++++ (win)')
+    end
+  end
+  context '.valid?' do
+    it 'Validate service test' do
+      expect{ Codebreaker.valid?(1237) }.to raise_error RegexpError
     end
   end
 
