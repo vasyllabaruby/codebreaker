@@ -7,7 +7,7 @@ require_relative 'codebreaker/version'
 module Codebreaker
   # Main class for codebreaker game
   class Main
-    attr_writer :secret_code, :secret_shelter
+    attr_writer :secret_code
     attr_accessor :user_code
     attr_reader :result
 
@@ -38,7 +38,6 @@ module Codebreaker
 
     def check_in_same_position
       index = -1
-      a = @secret_code.size
       while index < @secret_code.size - 1
         index += 1
         next unless @secret_code[index] == @user_code[index]
@@ -50,10 +49,12 @@ module Codebreaker
     end
 
     def check_in_different_position
-      @secret_code.each_with_index do |el, index|
-        next unless @user_code.include? el
+      index = -1
+      while index < @user_code.size - 1
+        index += 1
+        next unless @user_code.include? @secret_code[index]
 
-        @user_code[@user_code.index(el)] = 0
+        @user_code[@user_code.index(@secret_code[index])] = 0
         @secret_code[index] = -1
         @result << '-'
       end
