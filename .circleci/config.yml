@@ -25,7 +25,14 @@ commands:
       - save_cache:
           key: *bundle_cache_full
           paths:
-            -vendor/bundle
+            - vendor/bundle
+  run_linters:
+    description: start
+    steps:
+      - run:
+          name: rubocop
+          command: rubocop
+
 jobs:
 lintering:
   executor: default
