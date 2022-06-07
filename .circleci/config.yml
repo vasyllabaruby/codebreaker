@@ -40,7 +40,7 @@ lintering:
     -defaults
 
 workflows:
-    version: 2.1
+    version:2.1
     build:
       jobs:
-        - lintering
+      - lintering
