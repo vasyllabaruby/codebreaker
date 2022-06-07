@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Codebreaker
+  # Secret code entity for codebreaker
   class SecretCode
     CODE_SIZE = 4
     attr_reader :s_code

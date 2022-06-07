@@ -1,6 +1,8 @@
 # frozen_string_literal: true
+
 require 'codebreaker'
 
+# rubocop:disable Metrics/BlockLength
 RSpec.describe 'Codebreaker' do
   include Codebreaker
   it 'has a version number' do

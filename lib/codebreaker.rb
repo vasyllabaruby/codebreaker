@@ -5,6 +5,7 @@ require_relative 'codebreaker/validate_service'
 require_relative 'codebreaker/version'
 
 module Codebreaker
+  # Main class for codebreaker game
   class Main
     attr_writer :secret_code, :secret_shelter
     attr_accessor :user_code
@@ -47,11 +48,11 @@ module Codebreaker
 
     def check_in_different_position
       @secret_code.each_with_index do |el, index|
-        if @user_code.include? el
-          @user_code[@user_code.index(el)] = 0
-          @secret_code[index] = -1
-          @result << '-'
-        end
+        next unless @user_code.include? el
+
+        @user_code[@user_code.index(el)] = 0
+        @secret_code[index] = -1
+        @result << '-'
       end
     end
   end

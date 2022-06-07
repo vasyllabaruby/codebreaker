@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# validation method for codebreaker
 module Codebreaker
   CODE_SIZE = 4
   def self.valid?(code)
