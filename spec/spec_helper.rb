@@ -3,7 +3,7 @@
 require 'simplecov'
 SimpleCov.start
 
-require 'main'
+require 'codebreaker/game'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

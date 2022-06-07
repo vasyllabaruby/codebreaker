@@ -1,19 +1,19 @@
 # frozen_string_literal: true
-require 'main'
+require 'codebreaker/game'
 
-RSpec.describe 'Main' do
+RSpec.describe 'Game' do
   include Codebreaker
   it 'has a version number' do
     expect(Codebreaker::VERSION).not_to be nil
   end
 
   it 'Codebreaker need to be instant of Main' do
-    game = Codebreaker::Main.new
-    expect(game).to be_instance_of(Codebreaker::Main)
+    game = Codebreaker::Game.new
+    expect(game).to be_instance_of(Codebreaker::Game)
   end
 
   context '#play' do
-    let(:game) { Codebreaker::Main.new }
+    let(:game) { Codebreaker::Game.new }
     it 'Codebreaker game test 1' do
       result = game.play('6543', '5643')
       expect(result).to eq('++--')
@@ -61,7 +61,7 @@ RSpec.describe 'Main' do
   end
   context '.valid?' do
     it 'Validate service test' do
-      expect { Codebreaker.valid?(1237) }.to raise_error RegexpError
+      expect(Codebreaker.valid?(1237)).to eq(false)
     end
   end
 end
