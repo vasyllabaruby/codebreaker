@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe 'Codebreaker' do
+  include Codebreaker
   it 'has a version number' do
     expect(Codebreaker::VERSION).not_to be nil
   end
