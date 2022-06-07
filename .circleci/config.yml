@@ -1,25 +1,38 @@
 version: 2.1
 
 executors:
-  default:
-    working_directory: ~/repo
-    docker:
-      -image: cimg/ruby:3.1.2
-      environment:
-        RAILS_ENV: test
+default:
+working_directory: ~/repo
+description: Codebreaker gem project
+docker:
+       -image: circleci/ruby:3.1.2
+       environment:
+         RAILS_ENV: test
 
-  commands:
-    defaults:
-      steps:
-        - checkout
-        - run: bundle install
-jobs:
-  lintering:
-    executor: default
+caches:
+  - &bundle_cache_full v2-repo-{{ checksum "Gemfile.lock" }}
+  - &bundle_cache v2-repo
+
+commands:
+  defaults:
     steps:
-      -defaults
+      - checkout
+      - restore_cache:
+          keys:
+            - *bundle_cache_full
+            - *bundle_cache
+      - run: bundle install
+      - save_cache:
+          key: *bundle_cache_full
+          paths:
+            -vendor/bundle
+jobs:
+lintering:
+  executor: default
+  steps:
+    -defaults
 
-  workflows:
+workflows:
     version: 2.1
     build:
       jobs:
