@@ -8,4 +8,10 @@ module Codebreaker
 
     raise RegexpError
   end
+
+  def self.name_valid?(name)
+    return true if name =~ /^\w{3,20}$/
+
+    false
+  end
 end
