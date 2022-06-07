@@ -1,45 +1,19 @@
 version: 2.1
 
-executors:
-default:
-working_directory: ~/repo
-description: Codebreaker gem project
-docker:
-       -image: circleci/ruby:3.1.2
-       environment:
-         RAILS_ENV: test
-
-caches:
-  - &bundle_cache_full v2-repo-{{ checksum "Gemfile.lock" }}
-  - &bundle_cache v2-repo
-
-commands:
-  defaults:
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - *bundle_cache_full
-            - *bundle_cache
-      - run: bundle install
-      - save_cache:
-          key: *bundle_cache_full
-          paths:
-            - vendor/bundle
-  run_linters:
-    description: start
-    steps:
-      - run:
-          name: rubocop
-          command: rubocop
-
-jobs:
-  lintering:
-    executor: default
-    steps:
-      - defaults
-
 workflows:
     build:
       jobs:
-        - lintering
+        - test
+
+jobs:
+  test:
+    docker:
+      - image: cimg/ruby:3.1.2
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: bundle install
+      - run:
+          name: Run tests
+          command: rspec
