@@ -6,8 +6,8 @@ module Codebreaker
     CODE_SIZE = 4
     attr_reader :s_code
 
-    def initialize(s_code = '')
-      @s_code = s_code
+    def initialize
+      @s_code = ''
     end
 
     def generate
