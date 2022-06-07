@@ -9,14 +9,14 @@ module Codebreaker
   class Game
     attr_writer :secret_code
     attr_accessor :user_code
-    attr_reader :result, :attempt, :hints, :hint
+    attr_reader :result, :attempt, :hints, :old_hint
 
     def initialize
       @secret_code = generate_s_code
       @user_code = []
       @attempt = 0
       @hints = 0
-      @hint = 0
+      @old_hint = 0
     end
 
     def play(user_code, secret_code = @secret_code)
@@ -32,21 +32,23 @@ module Codebreaker
     def difficulty_level(difficulty)
       case difficulty
       when 1
-        @attempt = 15
-        @hints = 2
+        set_attempts_and_hints(15, 2)
       when 2
-        @attempt = 10
-        @hints = 1
+        set_attempts_and_hints(10, 1)
       when 3
-        @attempt = 5
-        @hints = 1
+        set_attempts_and_hints(5, 1)
       end
+    end
+
+    def set_attempts_and_hints(attempt, hint)
+      @attempts_total += attempt
+      @hints_total += hint
     end
 
     def hint
       if @hints.positive?
         result = @secret_code[rand(0..3)]
-        hint if result == @hint
+        hint if result == @old_hint
         @hints -= 1
         result
       else
