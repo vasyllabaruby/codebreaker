@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Codebreaker
-  # Secret code entity for codebreaker
+  # Secret code entity for codebreaker to generate secret code
   class SecretCode
     CODE_SIZE = 4
     attr_reader :s_code
@@ -12,9 +12,6 @@ module Codebreaker
 
     def generate
       CODE_SIZE.times { @s_code += rand(1..6).to_s }
-    end
-
-    def get
       @s_code
     end
   end
