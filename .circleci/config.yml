@@ -21,8 +21,8 @@ executors:
 jobs:
   lintering:
     executor: default
-      steps:
-        -defaults
+    steps:
+      -defaults
 
   workflows:
     version: 2.1
