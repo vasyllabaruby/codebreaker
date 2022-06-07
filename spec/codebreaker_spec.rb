@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'lib/codebreaker'
+require 'codebreaker'
 
 RSpec.describe 'Codebreaker' do
   include Codebreaker

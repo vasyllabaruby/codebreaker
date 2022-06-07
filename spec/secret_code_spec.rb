@@ -1,6 +1,7 @@
 require 'codebreaker'
 
 RSpec.describe 'SecretCode' do
+  include Codebreaker
   let(:code) { Codebreaker::SecretCode.new('1111') }
 
   context '#initialize' do
