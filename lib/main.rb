@@ -37,8 +37,11 @@ module Codebreaker
     end
 
     def check_in_same_position
-      @secret_code.each_with_index do |el, index|
-        next unless el == @user_code[index]
+      index = -1
+      a = @secret_code.size
+      while index < @secret_code.size - 1
+        index += 1
+        next unless @secret_code[index] == @user_code[index]
 
         @user_code[index] = 0
         @secret_code[index] = -1
