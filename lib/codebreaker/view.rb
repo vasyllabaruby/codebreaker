@@ -1,11 +1,12 @@
+# frozen_string_literal: true
+
 require_relative 'player'
 require_relative 'validate_service'
 require_relative 'game'
 
 module Codebreaker
-  #Class to interact with the console
+  # Class to interact with the console
   class View
-
     attr_reader :game
 
     def welcome
@@ -14,13 +15,13 @@ module Codebreaker
     end
 
     def menu
-      puts "Please input number: \n\t1 to start\n\t2 to rules\n\t3 to stats\n\t4 to exit"
-      command = gets
-      case command.to_i
-      when 1 then game_registration
-      when 2 then rules
-      when 3 then stats
-      when 4 then puts 'goodbye'
+      puts "Please input command: \n\tstart\n\trules\n\tstats\n\texit"
+      command = gets.chomp
+      case command
+      when 'start' then game_registration
+      when 'rules' then rules
+      when 'stats' then stats
+      when 'exit' then exit
       else puts 'You have passed unexpected command. Please choose one from listed commands', menu
       end
     end
@@ -40,10 +41,10 @@ module Codebreaker
 
     def game_registration
       new_player = ::Codebreaker::Player.new(input_name)
-      new_player.difficulty(choose_difficulty)
+      new_player.difficulty = (choose_difficulty)
       puts "\n\t\tGame started   !!!!"
       @game = Game.new
-      @game.difficulty_level(new_player.get_diff)
+      @game.difficulty_level(new_player.difficulty)
       lets_play
     end
 
@@ -51,26 +52,31 @@ module Codebreaker
 
     def lets_play
       step = gets.chomp.to_s
-      case step
-      when 'hint'
-        puts @game.hint
-        lets_play
-      when 'exit'
-        abort 'Goodbye'
-      else
-        result = @game.play(step)
-        if result.nil?
-          unexpected_command_message
-          lets_play
-        end
-        puts result
-        abort if result == '++++ (win)'
-        lets_play if @game.attempt.positive?
-      end
+      hint if step == 'hint'
+      exit if step == 'exit'
+      result(step)
+      lets_play if @game.attempts.positive?
+    end
+
+    def result(step)
+      result = @game.play(step)
+      unexpected_command_message if result.nil?
+      puts result
+      abort if result == '++++ (win)'
+    end
+
+    def hint
+      puts @game.hint
+      lets_play
+    end
+
+    def exit
+      abort 'Goodbye'
     end
 
     def unexpected_command_message
-      puts "Invalid values Please input: hint, exit or code"
+      puts 'Invalid values Please input: hint, exit or code'
+      lets_play
     end
 
     def input_name
@@ -88,14 +94,12 @@ module Codebreaker
     end
 
     def choose_difficulty
-      puts "Please choose difficulty:\n\t1 - Easy\n\t2 - Medium\n\t3 - Hell"
-      diff = gets.to_i
-      diff_values = [1, 2, 3]
-      return diff if diff_values.include?(diff)
+      puts "Please choose difficulty:\n\tEasy\n\tMedium\n\tHell"
+      diff = gets.chomp.downcase.to_sym
+      diff_values = { easy: 1, medium: 2, hell: 3 }
+      return diff_values[diff] if diff_values.keys.include?(diff)
 
       choose_difficulty
     end
-
   end
 end
-

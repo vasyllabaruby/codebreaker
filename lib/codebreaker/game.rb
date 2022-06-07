@@ -9,12 +9,12 @@ module Codebreaker
   class Game
     attr_writer :secret_code
     attr_accessor :user_code
-    attr_reader :result, :attempt, :hints, :old_hint
+    attr_reader :result, :attempts, :hints, :old_hint
 
     def initialize
       @secret_code = generate_s_code
       @user_code = []
-      @attempt = 0
+      @attempts = 0
       @hints = 0
       @old_hint = 0
     end
@@ -25,7 +25,7 @@ module Codebreaker
       @result = []
       @secret_code = secret_code
       check(user_code.chars, @secret_code.chars)
-      @attempt -= 1
+      @attempts -= 1
       result.join
     end
 
@@ -41,8 +41,8 @@ module Codebreaker
     end
 
     def set_attempts_and_hints(attempt, hint)
-      @attempts_total += attempt
-      @hints_total += hint
+      @attempts += attempt
+      @hints += hint
     end
 
     def hint
