@@ -3,15 +3,10 @@ version: 2.1
 executors:
   default:
     working_directory: ~/repo
-    description: Codebreaker gem project
     docker:
       -image: circleci/ruby:3.1.2
       environment:
         RAILS_ENV: test
-
-  caches:
-    - &bundle_cache_full v2-repo-{{ checksum "Gemfile.lock" }}
-    - &bundle_cache v2-repo
 
   commands:
     defaults:
