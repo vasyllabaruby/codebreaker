@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'codebreaker'
-
 RSpec.describe 'SecretCode' do
   include Codebreaker
   let(:code) { Codebreaker::SecretCode.new('1111') }
