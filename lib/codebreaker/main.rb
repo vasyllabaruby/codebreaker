@@ -1,32 +1,54 @@
 # frozen_string_literal: true
 
-require_relative 'codebreaker/secret_code'
-require_relative 'codebreaker/validate_service'
-require_relative 'codebreaker/version'
+require_relative 'validate_service'
+require_relative 'secret_code'
+require_relative 'version'
 
 module Codebreaker
   # Main class for codebreaker game
   class Main
     attr_writer :secret_code
     attr_accessor :user_code
-    attr_reader :result
+    attr_reader :result, :attempt, :hints
 
     def initialize
-      @secret_code = []
+      @secret_code = generate_s_code
       @user_code = []
       @result = []
+      @attempt = 0
+      @hints = 0
     end
 
-    def play(user_code, secret_code)
+    def play(user_code, secret_code = @secret_code)
       Codebreaker.valid?(user_code)
       @user_code = user_code.chars
       @secret_code = secret_code.chars
-      @result = []
       check
       result.join
     end
 
+    def difficulty(level)
+      case level
+      when 'easy' then @attempt = 15, @hints = 2
+      when 'medium' then @attempt = 10, @hints = 1
+      when 'hell' then @attempt = 5, @hints = 1
+      end
+    end
+
+    def hint
+      if @hints.positive?
+        @secret_code[rand(0..3)]
+      else
+        'you have no hints'
+      end
+    end
+
     private
+
+    def generate_s_code
+      code = SecretCode.new
+      code.generate
+    end
 
     def check
       return @result = ['++++ (win)'] if @user_code == @secret_code
