@@ -28,7 +28,7 @@ executors:
               -vendor/bundle
 jobs:
   lintering:
-    executor: : default
+    executor: default
       steps:
         -defaults
 
