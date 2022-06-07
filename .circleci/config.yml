@@ -34,12 +34,12 @@ commands:
           command: rubocop
 
 jobs:
-lintering:
-  executor: default
-  steps:
-    -defaults
+  lintering:
+    executor: default
+    steps:
+      - defaults
 
 workflows:
     build:
       jobs:
-      - lintering
+        - lintering
