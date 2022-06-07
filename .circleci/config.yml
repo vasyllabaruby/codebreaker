@@ -17,3 +17,9 @@ jobs:
       - run:
           name: Run tests
           command: rspec
+      - run:
+          name: Run rubocop
+          command: rubocop
+      - run:
+          name: Run fasterer
+          command: fasterer
