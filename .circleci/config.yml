@@ -30,7 +30,7 @@ jobs:
   lintering:
     executor: default
       steps:
-        -defaults
+        - defaults
 
   workflows:
     version: 2.1
