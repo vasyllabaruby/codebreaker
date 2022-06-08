@@ -6,7 +6,7 @@ RSpec.describe 'Game' do
     let(:game) { Codebreaker::Game.new }
     it 'Codebreaker game test hint method' do
       hint_test_to('you have no hints')
-      game.difficulty_level(1)
+      game.difficulty_level(:easy)
       hint_test_not('you have no hints')
     end
 
