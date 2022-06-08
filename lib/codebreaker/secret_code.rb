@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Codebreaker
+module SecretCodeGenerator
   # Secret code entity for codebreaker to generate secret code
   class SecretCode
     CODE_SIZE = 4

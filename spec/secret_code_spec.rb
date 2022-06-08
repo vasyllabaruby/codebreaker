@@ -3,12 +3,11 @@
 require 'codebreaker/game'
 
 RSpec.describe 'SecretCode' do
-  include Codebreaker
-  let(:code) { Codebreaker::SecretCode.new }
+  let(:code) { SecretCodeGenerator::SecretCode.new }
 
   context '#initialize' do
     it 'initialize instant' do
-      expect(code).to be_instance_of(Codebreaker::SecretCode)
+      expect(code).to be_instance_of(SecretCodeGenerator::SecretCode)
     end
   end
 

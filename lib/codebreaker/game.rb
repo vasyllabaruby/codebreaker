@@ -82,7 +82,7 @@ module Codebreaker
     end
 
     def generate_s_code
-      code = SecretCode.new
+      code = ::SecretCodeGenerator::SecretCode.new
       code.generate
     end
 
