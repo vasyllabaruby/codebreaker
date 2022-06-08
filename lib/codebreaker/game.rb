@@ -41,8 +41,8 @@ module Codebreaker
     end
 
     def set_attempts_and_hints(attempt, hint)
-      @attempts += attempt
-      @hints += hint
+      @attempts = attempt
+      @hints = hint
     end
 
     def hint
