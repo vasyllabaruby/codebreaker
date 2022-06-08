@@ -24,6 +24,7 @@ RSpec.describe 'Game' do
       play_test('1234', '1234', '++++ (win)')
     end
     def play_test(user_code, secret_code, result)
+      game.new_game('Mykola', :medium)
       expect(game.play(user_code, secret_code)).to eq(result)
     end
   end
