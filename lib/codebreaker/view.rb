@@ -7,7 +7,11 @@ require_relative 'game'
 module Codebreaker
   # Class to interact with the console
   class View
-    attr_reader :game
+    attr_reader :game, :statistics, :new_player
+
+    def initialize
+      @statistics = []
+    end
 
     def welcome
       puts 'Welcome!!!'
@@ -34,14 +38,9 @@ module Codebreaker
       menu
     end
 
-    def stats
-      puts 'are we need db?'
-      menu
-    end
-
     def game_registration
-      new_player = ::Codebreaker::Player.new(input_name)
-      new_player.difficulty = (choose_difficulty)
+      @new_player = ::Codebreaker::Player.new(input_name)
+      @new_player.difficulty = (choose_difficulty)
       puts "\n\t\tGame started   !!!!"
       @game = Game.new
       @game.difficulty_level(new_player.difficulty)
@@ -55,14 +54,38 @@ module Codebreaker
       hint if step == 'hint'
       exit if step == 'exit'
       result(step)
-      lets_play if @game.attempts.positive?
+      if @game.attempts.positive?
+        lets_play
+      else
+        you_loose
+      end
     end
 
     def result(step)
       result = @game.play(step)
       unexpected_command_message if result.nil?
+      you_win if result == '++++ (win)'
       puts result
-      abort if result == '++++ (win)'
+    end
+
+    def you_win
+      puts '++++ (win)'
+      save_stats
+      puts "\t\t Congratulation!!!\none mote time?\n"
+      menu
+    end
+
+    def you_loose
+      puts 'you loose'
+      save_stats
+      puts "\tone mote time?\n"
+      menu
+    end
+
+    def save_stats
+      @new_player.attempts_used = @game.attempts
+      @new_player.hints_used = @game.hints
+      @statistics << @new_player
     end
 
     def hint
@@ -81,7 +104,7 @@ module Codebreaker
 
     def input_name
       puts 'Please input your name'
-      name = gets
+      name = gets.chomp
       return if name.equal?('exit')
 
       not_valid_name unless Codebreaker.name_valid?(name)
@@ -96,10 +119,24 @@ module Codebreaker
     def choose_difficulty
       puts "Please choose difficulty:\n\tEasy\n\tMedium\n\tHell"
       diff = gets.chomp.downcase.to_sym
-      diff_values = { easy: 1, medium: 2, hell: 3 }
-      return diff_values[diff] if diff_values.keys.include?(diff)
+      diff_values = %i[easy medium hell]
+      return diff if diff_values.include?(diff)
 
       choose_difficulty
+    end
+
+    def stats
+      print_table
+      menu
+    end
+
+    def print_table
+      format = '%-8s %-8s %-15s %-15s %-15s %-15s %s'
+      puts format % ['Rating', 'Name', 'Difficulty', 'Attempts Total', 'Attempts Used', 'Hints Total', 'Hints Used']
+      @statistics.each_with_index do |player, i|
+        puts format % [ i+1, player.name, player.difficulty, player.attempts_total, player.attempts_used,
+                        player.hints_total, player.hints_used ]
+      end
     end
   end
 end
