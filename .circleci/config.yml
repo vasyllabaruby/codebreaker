@@ -1,13 +1,5 @@
 version: 2.1
 
-executors:
-  default:
-    working_directory: ~/repo
-    description: The official Docker image
-    docker:
-      - image: cimg/ruby.3.1.2
-        environment:
-          RAILS_ENV: test
 
 caches:
   - &bundle_cache_v1 v2-repo-{{ checksum "Gemfile.lock }}
@@ -26,7 +18,8 @@ commands:
 
 jobs:
   run_specs:
-    executor: default
+    docker:
+      - image: cimg/ruby:3.1.2
     steps:
       - defaults
       - run_specs
