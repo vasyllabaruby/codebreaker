@@ -69,7 +69,8 @@ module Codebreaker
     private
 
     def save_stats(result)
-      return unless result[0] == '++++ (win)' || @attempts.positive?
+      return unless result[0] == '++++ (win)'
+      return unless @attempts.positive?
 
       @player.attempts_used = (@attempts)
       @player.hints_used = (@hints)
