@@ -20,7 +20,7 @@ module Codebreaker
 
     def difficulty=(difficulty)
       @difficulty = difficulty
-      attempts_and_hints(DIFFICULTY_VALUES(difficulty))
+      attempts_and_hints(DIFFICULTY_VALUES[difficulty])
     end
 
     def attempts_used=(game_attempt)
@@ -37,9 +37,9 @@ module Codebreaker
 
     private
 
-    def attempts_and_hints(_values)
-      @attempts_total += values(:attempts)
-      @hints_total += values(:hints)
+    def attempts_and_hints(var)
+      @attempts_total += var[:attempts]
+      @hints_total += var[:hints]
     end
   end
 end

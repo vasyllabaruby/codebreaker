@@ -3,20 +3,29 @@
 require_relative 'validate_service'
 require_relative 'secret_code'
 require_relative 'version'
+require_relative 'player'
 
 module Codebreaker
   # Main class for codebreaker game
   class Game
     attr_writer :secret_code
-    attr_accessor :user_code
+    attr_accessor :user_code, :player, :statistic
     attr_reader :result, :attempts, :hints, :old_hint
 
     def initialize
       @secret_code = generate_s_code
       @user_code = []
+      @statistic = []
       @attempts = 0
       @hints = 0
       @old_hint = 0
+    end
+
+    def new_game(name, difficulty)
+      @secret_code = generate_s_code
+      @player = ::Codebreaker::Player.new(name)
+      @player.difficulty = (difficulty)
+      difficulty_level(difficulty)
     end
 
     def play(user_code, secret_code = @secret_code)
@@ -26,6 +35,7 @@ module Codebreaker
       @secret_code = secret_code
       check(user_code.chars, @secret_code.chars)
       @attempts -= 1
+      save_stats(result)
       result.join
     end
 
@@ -57,6 +67,14 @@ module Codebreaker
     end
 
     private
+
+    def save_stats(result)
+      return unless result[0] == '++++ (win)' || @attempts.positive?
+
+      @player.attempts_used = (@attempts)
+      @player.hints_used = (@hints)
+      @statistic << @player
+    end
 
     def generate_s_code
       code = SecretCode.new
