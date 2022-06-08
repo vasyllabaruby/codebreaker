@@ -51,6 +51,9 @@ jobs:
 workflows:
   build:
     jobs:
+      - docker/check:
+          docker-username: DOCKERHUB_LOGIN  # DOCKER_LOGIN is the default value, if it exists, it automatically would be used.
+          docker-password: DOCKERHUB_PASSWORD  # DOCKER_PASSWORD is the default value
       - lintering
       - run_specs:
           requires:
