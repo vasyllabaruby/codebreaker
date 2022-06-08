@@ -1,5 +1,9 @@
 version: 2.1
 
+executors:
+  default:
+    docker:
+      - image: cimg/ruby:3.1.2
 
 caches:
   - &bundle_cache_v1 v2-repo-{{ checksum "Gemfile.lock }}
@@ -9,7 +13,23 @@ commands:
   defaults:
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - *bundle_cache_v1
+            - *bundle_cache
       - run: bundle install
+      - save_cache:
+          key: *bundle_cache
+          paths:
+            - vendor/bundle
+  run_linters:
+    steps:
+      - run:
+          name: rubocop
+          command: rubocop
+      - run:
+          name: fasterer
+          command: fasterer
   run_specs:
     steps:
       - run:
@@ -17,9 +37,14 @@ commands:
           command: rspec
 
 jobs:
-  run_specs:
+  lintering:
     docker:
       - image: cimg/ruby:3.1.2
+    steps:
+      - defaults
+      - run_linters
+  run_specs:
+    executor: default
     steps:
       - defaults
       - run_specs
@@ -27,4 +52,7 @@ jobs:
 workflows:
   build:
     jobs:
-      - run_specs
+      - lintering
+      - run_specs:
+          requires:
+            - lintering
