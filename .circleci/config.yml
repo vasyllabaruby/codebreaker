@@ -3,8 +3,10 @@ version: 2.1
 executors:
   default:
     docker:
-      - image: jruby:9.3
-      - image: circleci/ruby.3.1.2
+      - image: cimg/ruby.3.1.2
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD
 
 caches:
   - &bundle_cache_v1 v2-repo-{{ checksum "Gemfile.lock }}
