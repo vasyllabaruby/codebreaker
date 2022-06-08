@@ -31,11 +31,11 @@ module Codebreaker
 
     def difficulty_level(difficulty)
       case difficulty
-      when 1
+      when :easy
         set_attempts_and_hints(15, 2)
-      when 2
+      when :medium
         set_attempts_and_hints(10, 1)
-      when 3
+      when :hell
         set_attempts_and_hints(5, 1)
       end
     end
