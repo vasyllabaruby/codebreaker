@@ -3,7 +3,7 @@ version: 2.1
 executors:
   default:
     docker:
-      - image: cimg/ruby.3.1.2
+      - image: circleci/ruby.3.1.2
 
 caches:
   - &bundle_cache_v1 v2-repo-{{ checksum "Gemfile.lock }}
@@ -38,14 +38,12 @@ commands:
 
 jobs:
   lintering:
-    docker:
-      - image: cimg/ruby.3.1.2
+    executor: default
     steps:
       - defaults
       - run_linters
   run_specs:
-    docker:
-      - image: cimg/ruby.3.1.2
+    executor: default
     steps:
       - defaults
       - run_specs
