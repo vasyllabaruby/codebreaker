@@ -38,12 +38,14 @@ commands:
 
 jobs:
   lintering:
-    executor: default
+    docker:
+      - image: cimg/ruby.3.1.2
     steps:
       - defaults
       - run_linters
   run_specs:
-    executor: default
+    docker:
+      - image: cimg/ruby.3.1.2
     steps:
       - defaults
       - run_specs
