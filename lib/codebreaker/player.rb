@@ -6,23 +6,21 @@ module Codebreaker
     attr_accessor :attempts_total, :hints_total
     attr_reader :name, :difficulty, :attempts_used, :hints_used
 
+    DIFFICULTY_VALUES = {
+      easy: { attempts: 15, hints: 2 },
+      medium: { attempts: 10, hints: 1 },
+      hell: { attempts: 5, hints: 1 }
+    }.freeze
     def initialize(name)
       @name = name
       @attempts_total = 0
       @hints_total = 0
-      @difficulty = 0
+      @difficulty = {}
     end
 
     def difficulty=(difficulty)
       @difficulty = difficulty
-      case @difficulty
-      when :easy
-        set_attempts_and_hints(15, 2)
-      when :medium
-        set_attempts_and_hints(10, 1)
-      when :hell
-        set_attempts_and_hints(5, 1)
-      end
+      attempts_and_hints(DIFFICULTY_VALUES(difficulty))
     end
 
     def attempts_used=(game_attempt)
@@ -39,9 +37,9 @@ module Codebreaker
 
     private
 
-    def set_attempts_and_hints(attempt, hint)
-      @attempts_total += attempt
-      @hints_total += hint
+    def attempts_and_hints(_values)
+      @attempts_total += values(:attempts)
+      @hints_total += values(:hints)
     end
   end
 end
