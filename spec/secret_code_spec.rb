@@ -7,13 +7,13 @@ RSpec.describe 'SecretCode' do
 
   context '#initialize' do
     it 'initialize instant' do
-      expect(code).to be_instance_of(SecretCodeGenerator::SecretCode)
+      expect(SecretCodeGenerator.generate).to be_instance_of(String)
     end
   end
 
   context '#generate' do
     it 'generate new code' do
-      expect(code.generate).not_to eq('1111')
+      expect(SecretCodeGenerator.generate).not_to eq('1111')
     end
   end
 end

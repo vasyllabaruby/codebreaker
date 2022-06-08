@@ -10,8 +10,13 @@ module Codebreaker
   class Game
     attr_writer :secret_code
     attr_accessor :user_code, :player, :statistic
-    attr_reader :result, :attempts, :hints, :old_hint
+    attr_reader :result, :attempts, :hints, :old_hint, :difficulty_values
 
+    DIFFICULTY_VALUES = {
+      easy: { attempts: 15, hints: 2 },
+      medium: { attempts: 10, hints: 1 },
+      hell: { attempts: 5, hints: 1 }
+    }.freeze
     def initialize
       @secret_code = generate_s_code
       @user_code = []
@@ -19,12 +24,12 @@ module Codebreaker
       @attempts = 0
       @hints = 0
       @old_hint = 0
+      @difficulty_values = {}
     end
 
     def new_game(name, difficulty)
       @secret_code = generate_s_code
       @player = ::Codebreaker::Player.new(name)
-      @player.difficulty = (difficulty)
       difficulty_level(difficulty)
     end
 
@@ -37,22 +42,6 @@ module Codebreaker
       @attempts -= 1
       save_stats if end_game?
       result.join
-    end
-
-    def difficulty_level(difficulty)
-      case difficulty
-      when :easy
-        set_attempts_and_hints(15, 2)
-      when :medium
-        set_attempts_and_hints(10, 1)
-      when :hell
-        set_attempts_and_hints(5, 1)
-      end
-    end
-
-    def set_attempts_and_hints(attempt, hint)
-      @attempts = attempt
-      @hints = hint
     end
 
     def hint
@@ -68,6 +57,18 @@ module Codebreaker
 
     private
 
+    def difficulty_level(difficulty)
+      attempts_and_hints(DIFFICULTY_VALUES[difficulty])
+      @player.current_difficulty(difficulty)
+      @player.attempts_total = @attempts
+      @player.hints_total = @hints
+    end
+
+    def attempts_and_hints(var)
+      @attempts = var[:attempts]
+      @hints = var[:hints]
+    end
+
     def end_game?
       return true if result[0] == '++++ (win)'
       return true unless @attempts.positive?
@@ -82,8 +83,7 @@ module Codebreaker
     end
 
     def generate_s_code
-      code = ::SecretCodeGenerator::SecretCode.new
-      code.generate
+      SecretCodeGenerator.generate
     end
 
     def check(user_code, secret_code)
