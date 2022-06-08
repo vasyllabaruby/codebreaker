@@ -3,11 +3,14 @@
 require_relative 'player'
 require_relative 'validate_service'
 require_relative 'game'
+require_relative 'show_stats'
 
 module Codebreaker
   # Class to interact with the console
   class View
     attr_reader :game, :statistics, :new_player
+
+    include(Codebreaker)
 
     def initialize
       @statistics = []
@@ -32,8 +35,7 @@ module Codebreaker
 
     def rules
       file = File.open('Rules.txt')
-      file_data = file.read
-      puts file_data
+      puts file.read
       file.close
       menu
     end
@@ -69,16 +71,14 @@ module Codebreaker
     end
 
     def you_win
-      puts '++++ (win)'
+      puts "++++ (win)\n\n\t\t Congratulation!!!\none mote time?\n"
       save_stats
-      puts "\t\t Congratulation!!!\none mote time?\n"
       menu
     end
 
     def you_loose
-      puts 'you loose'
+      puts "you loose\n\tone mote time?\n"
       save_stats
-      puts "\tone mote time?\n"
       menu
     end
 
@@ -126,17 +126,8 @@ module Codebreaker
     end
 
     def stats
-      print_table
+      show_stats
       menu
-    end
-
-    def print_table
-      format = '%-8s %-8s %-15s %-15s %-15s %-15s %s'
-      puts format % ['Rating', 'Name', 'Difficulty', 'Attempts Total', 'Attempts Used', 'Hints Total', 'Hints Used']
-      @statistics.each_with_index do |player, i|
-        puts format % [ i+1, player.name, player.difficulty, player.attempts_total, player.attempts_used,
-                        player.hints_total, player.hints_used ]
-      end
     end
   end
 end
