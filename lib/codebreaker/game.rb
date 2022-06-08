@@ -35,7 +35,7 @@ module Codebreaker
       @secret_code = secret_code
       check(user_code.chars, @secret_code.chars)
       @attempts -= 1
-      save_stats(result)
+      save_stats if end_game?
       result.join
     end
 
@@ -68,9 +68,14 @@ module Codebreaker
 
     private
 
-    def save_stats(result)
-      return unless result[0] == '++++ (win)' && @attempts.positive?
+    def end_game?
+      return true if result[0] == '++++ (win)'
+      return true unless @attempts.positive?
 
+      false
+    end
+
+    def save_stats
       @player.attempts_used = (@attempts)
       @player.hints_used = (@hints)
       @statistic << @player
