@@ -2,9 +2,8 @@
 
 # validation method for codebreaker
 module ValidateService
-  CODE_SIZE = 4
   def self.valid?(code)
-    return true if code =~ /^[1-6]{#{CODE_SIZE}}$/
+    return true if code =~ /^[1-6]{#{::SecretCodeGenerator.const_get(:CODE_SIZE)}}$/
 
     false
   end
