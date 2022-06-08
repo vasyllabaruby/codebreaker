@@ -3,6 +3,7 @@ version: 2.1
 executors:
   default:
     docker:
+      - image: jruby:9.3
       - image: circleci/ruby.3.1.2
 
 caches:
