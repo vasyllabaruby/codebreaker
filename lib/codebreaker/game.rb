@@ -34,7 +34,7 @@ module Codebreaker
     end
 
     def play(user_code, secret_code = @secret_code)
-      return nil unless Codebreaker.valid?(user_code)
+      return nil unless ValidateService.valid?(user_code)
 
       @result = []
       @secret_code = secret_code

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # validation method for codebreaker
-module Codebreaker
+module ValidateService
   CODE_SIZE = 4
   def self.valid?(code)
     return true if code =~ /^[1-6]{#{CODE_SIZE}}$/
