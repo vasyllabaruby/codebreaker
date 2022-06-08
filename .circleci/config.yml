@@ -2,11 +2,12 @@ version: 2.1
 
 executors:
   default:
+    working_directory: `/repo
+    description: The official Docker image
     docker:
       - image: cimg/ruby.3.1.2
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD
+        environment:
+          RAILS_ENV: test
 
 caches:
   - &bundle_cache_v1 v2-repo-{{ checksum "Gemfile.lock }}
@@ -25,14 +26,6 @@ commands:
           key: *bundle_cache
           paths:
             - vendor/bundle
-  run_linters:
-    steps:
-      - run:
-          name: rubocop
-          command: rubocop
-      - run:
-          name: fasterer
-          command: fasterer
   run_specs:
     steps:
       - run:
@@ -40,11 +33,6 @@ commands:
           command: rspec
 
 jobs:
-  lintering:
-    executor: default
-    steps:
-      - defaults
-      - run_linters
   run_specs:
     executor: default
     steps:
@@ -54,7 +42,6 @@ jobs:
 workflows:
   build:
     jobs:
-      - lintering
       - run_specs:
           requires:
             - lintering
