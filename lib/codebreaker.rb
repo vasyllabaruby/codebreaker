@@ -7,7 +7,7 @@ require_relative 'show_stats'
 
 module Codebreaker
   # Class to interact with the console
-  class View
+  class Interface
     attr_reader :game, :statistics, :new_player
 
     include(Codebreaker)
@@ -41,6 +41,10 @@ module Codebreaker
     end
 
     def game_registration
+      # to console game.new(name, diff)
+      #
+      #
+      #
       @new_player = ::Codebreaker::Player.new(input_name)
       @new_player.difficulty = (choose_difficulty)
       puts "\n\t\tGame started   !!!!"
@@ -121,6 +125,7 @@ module Codebreaker
       diff = gets.chomp.downcase.to_sym
       diff_values = %i[easy medium hell]
       return diff if diff_values.include?(diff)
+      # ToDO
 
       choose_difficulty
     end
