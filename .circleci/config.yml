@@ -17,15 +17,7 @@ commands:
   defaults:
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - *bundle_cache_v1
-            - *bundle_cache
       - run: bundle install
-      - save_cache:
-          key: *bundle_cache
-          paths:
-            - vendor/bundle
   run_specs:
     steps:
       - run:
