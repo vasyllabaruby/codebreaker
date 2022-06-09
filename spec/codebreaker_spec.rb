@@ -24,10 +24,10 @@ RSpec.describe 'Game' do
                  ['1234', '1524', '++-'],
                  ['1234', '1234', '++++ (win)']]
 
-    all_cases.each do |el|
-      it "when user code is #{el[0]} and secret is #{el[1]} result is #{el[2]}" do
+    all_cases.each do |user_code, secret_code, result|
+      it "when user code is #{user_code} and secret is #{secret_code} result is #{result}" do
         game.new_game('Mykola', :medium)
-        expect(game.play(el[0], el[1])).to eq(el[2])
+        expect(game.play(user_code, secret_code)).to eq(result)
       end
     end
   end
