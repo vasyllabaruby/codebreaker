@@ -18,7 +18,7 @@ module Codebreaker
       hell: { attempts: 5, hints: 1 }
     }.freeze
     def initialize
-      @secret_code = generate_s_code
+      @secret_code = generate_secret_code
       @user_code = []
       @statistic = []
       @attempts = 0
@@ -28,7 +28,7 @@ module Codebreaker
     end
 
     def new_game(name, difficulty)
-      @secret_code = generate_s_code
+      @secret_code = generate_secret_code
       @player = ::Codebreaker::Player.new(name)
       difficulty_level(difficulty)
     end
@@ -82,7 +82,7 @@ module Codebreaker
       @statistic << @player
     end
 
-    def generate_s_code
+    def generate_secret_code
       SecretCodeGenerator.generate
     end
 
