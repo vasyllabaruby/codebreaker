@@ -12,8 +12,11 @@ RSpec.describe 'SecretCode' do
   end
 
   context '#generate' do
-    it 'generate new code' do
-      expect(SecretCodeGenerator.generate).not_to eq('1111')
+    it 'Check code size' do
+      expect(SecretCodeGenerator.generate.length).to eq(::SecretCodeGenerator.const_get(:CODE_SIZE))
+    end
+    it 'Check code values' do
+      expect(SecretCodeGenerator.generate).to match(/^[1-6]{#{::SecretCodeGenerator.const_get(:CODE_SIZE)}}$/)
     end
   end
 end
