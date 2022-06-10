@@ -4,8 +4,11 @@ require 'codebreaker/game'
 
 RSpec.describe 'ValidateService' do
   context '.valid?' do
-    it 'Validate service test valid?' do
-      expect(ValidateService.valid?(1237)).to eq(false)
+    it 'Validate service test valid? false' do
+      expect(ValidateService.valid?('1237')).to eq(false)
+    end
+    it 'Validate service test valid? true' do
+      expect(ValidateService.valid?('1336')).to eq(true)
     end
   end
   context '.name_valid?' do
