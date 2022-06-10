@@ -18,7 +18,6 @@ module Codebreaker
       hell: { attempts: 5, hints: 1 }
     }.freeze
     def initialize
-      @secret_code = generate_secret_code
       @user_code = []
       @statistic = []
       @attempts = 0
@@ -28,16 +27,15 @@ module Codebreaker
     end
 
     def new_game(name, difficulty)
-      @secret_code = generate_secret_code
+      generate_secret_code
       @player = ::Codebreaker::Player.new(name)
       difficulty_level(difficulty)
     end
 
-    def play(user_code, secret_code = @secret_code)
+    def play(user_code)
       return nil unless ValidateService.code_valid?(user_code)
 
       @result = []
-      @secret_code = secret_code
       check(user_code.chars, @secret_code.chars)
       @attempts -= 1
       save_stats if end_game?
@@ -83,7 +81,7 @@ module Codebreaker
     end
 
     def generate_secret_code
-      SecretCodeGenerator.generate
+      @secret_code = SecretCodeGenerator.generate
     end
 
     def check(user_code, secret_code)
