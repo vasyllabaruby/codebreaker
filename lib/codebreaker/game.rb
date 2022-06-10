@@ -76,7 +76,7 @@ module Codebreaker
 
     def load_stats
       @statistic = load
-      @statistic = [] if @statistic.nil?
+      @statistic = [] if @statistic.nil? || @statistic == false
     end
 
     def save_stats
