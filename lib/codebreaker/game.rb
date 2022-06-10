@@ -21,7 +21,7 @@ module Codebreaker
     }.freeze
     def initialize
       @user_code = []
-      @statistic = []
+      load_stats
     end
 
     def new_game(name, difficulty)
