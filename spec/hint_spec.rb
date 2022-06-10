@@ -5,6 +5,8 @@ RSpec.describe 'Game' do
   context '#hint' do
     let(:game) { Codebreaker::Game.new }
     it 'you have not hints true' do
+      game.new_game('tester', :easy)
+      game.instance_variable_set(:@hints, 0)
       expect(game.hint).to eq('you have no hints')
     end
     it 'you have not hints false' do

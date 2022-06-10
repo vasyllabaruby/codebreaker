@@ -22,10 +22,6 @@ module Codebreaker
     def initialize
       @user_code = []
       @statistic = []
-      @attempts = 0
-      @hints = 0
-      @old_hint = 0
-      @difficulty_values = {}
     end
 
     def new_game(name, difficulty)
