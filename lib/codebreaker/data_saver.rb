@@ -13,7 +13,7 @@ module Codebreaker
     end
 
     def load(filename = DEFAULT_FILENAME)
-      Psych.unsafe_load(File.read(filename))
+      Psych.unsafe_load(File.read(filename)) if File.exist? filename
     end
   end
 end
