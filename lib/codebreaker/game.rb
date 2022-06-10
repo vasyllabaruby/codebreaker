@@ -4,10 +4,12 @@ require_relative 'validate_service'
 require_relative 'secret_code'
 require_relative 'version'
 require_relative 'player'
+require_relative 'data_saver'
 
 module Codebreaker
   # Main class for codebreaker game
   class Game
+    include(DataSaver)
     attr_writer :secret_code
     attr_accessor :user_code, :player, :statistic
     attr_reader :result, :attempts, :hints, :old_hint, :difficulty_values
@@ -74,10 +76,15 @@ module Codebreaker
       false
     end
 
+    def load_stats
+      @statistic = load
+    end
+
     def save_stats
       @player.attempts_used = (@attempts)
       @player.hints_used = (@hints)
       @statistic << @player
+      save(@statistic)
     end
 
     def generate_secret_code
