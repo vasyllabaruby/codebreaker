@@ -82,7 +82,7 @@ module Codebreaker
     def save_stats
       @player.attempts_used = (@attempts)
       @player.hints_used = (@hints)
-      @statistic << @player
+      @statistic.append(@player)
       save(@statistic)
     end
 
