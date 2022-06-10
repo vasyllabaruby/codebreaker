@@ -93,21 +93,18 @@ module Codebreaker
     end
 
     def check_in_same_position(user_code, secret_code)
-      index = -1
-      while index < secret_code.size - 1
-        index += 1
+      user_code.length.times do |index|
         next unless secret_code[index] == user_code[index]
 
-        user_code[index] = 0
-        secret_code[index] = -1
+        user_code[index] = nil
+        secret_code[index] = nil
         @result << '+'
       end
     end
 
     def check_in_different_position(user_code, secret_code)
-      index = -1
-      while index < user_code.size - 1
-        index += 1
+      user_code.length.times do |index|
+        next if secret_code[index].nil?
         next unless user_code.include? secret_code[index]
 
         user_code[user_code.index(secret_code[index])] = 0
