@@ -5,17 +5,9 @@ RSpec.describe 'Game' do
   context '#hint' do
     let(:game) { Codebreaker::Game.new }
     it 'Codebreaker game test hint method' do
-      hint_test_to('you have no hints')
+      expect(game.hint).to eq('you have no hints')
       game.new_game('tester', :easy)
-      hint_test_not('you have no hints')
-    end
-
-    def hint_test_to(result)
-      expect(game.hint).to eq(result)
-    end
-
-    def hint_test_not(result)
-      expect(game.hint).not_to eq(result)
+      expect(game.hint).not_to eq('you have no hints')
     end
   end
 end
