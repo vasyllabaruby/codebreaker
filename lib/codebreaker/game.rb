@@ -46,11 +46,11 @@ module Codebreaker
 
     def hint
       if @hints.positive?
-        result = @secret_code[rand(0..3)]
+        result = rand(0..3)
         hint if result == @old_hint
         @old_hint = result
         @hints -= 1
-        result
+        @secret_code[result]
       else
         'you have no hints'
       end
