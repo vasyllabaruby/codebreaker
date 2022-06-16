@@ -7,7 +7,8 @@ RSpec.describe 'Game' do
     it 'you have not hints true' do
       game.new_game('tester', :easy)
       game.instance_variable_set(:@hints, 0)
-      expect(game.hint).to eq('you have no hints')
+      game.instance_variable_set(:@old_hint, 3)
+      expect(game.hint).to eq(3)
     end
     it 'you have not hints false' do
       game.new_game('tester', :easy)
