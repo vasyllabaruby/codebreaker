@@ -4,15 +4,14 @@ RSpec.describe 'Game' do
   include Codebreaker
   context '#hint' do
     let(:game) { Codebreaker::Game.new }
-    it 'you have not hints true' do
-      game.new_game('tester', :easy)
-      game.instance_variable_set(:@hints, 0)
-      game.instance_variable_set(:@old_hint, 3)
-      expect(game.hint).to eq(3)
+    it 'return nil if you have no hints' do
+      game.new_game('tester', :hell)
+      game.hint
+      expect(game.hint).to eq(nil)
     end
-    it 'you have not hints false' do
+    it 'hint is not nil' do
       game.new_game('tester', :easy)
-      expect(game.hint).not_to eq('you have no hints')
+      expect(game.hint).not_to eq(nil)
     end
     it 'hint is one of secret code numbers' do
       game.new_game('tester', :easy)
