@@ -52,9 +52,9 @@ module Codebreaker
       @player.current_difficulty(difficulty)
     end
 
-    def attempts_and_hints(var)
-      @player.attempts_total = @attempts = var[:attempts]
-      @player.hints_total = @hints = var[:hints]
+    def attempts_and_hints(difficulty)
+      @player.attempts_total = @attempts = difficulty[:attempts]
+      @player.hints_total = @hints = difficulty[:hints]
       @hints_list = @secret_code.chars.sample(@hints)
     end
 
