@@ -12,13 +12,14 @@ module Codebreaker
     include(DataSaver)
     attr_writer :secret_code
     attr_accessor :user_code, :player, :statistic
-    attr_reader :result, :attempts, :hints, :old_hint, :difficulty_values
+    attr_reader :result, :attempts, :hints, :old_hint, :difficulty_values, :hints_list
 
     DIFFICULTY_VALUES = {
       easy: { attempts: 15, hints: 2 },
       medium: { attempts: 10, hints: 1 },
       hell: { attempts: 5, hints: 1 }
     }.freeze
+
     def initialize
       @user_code = []
       load_stats
@@ -41,15 +42,7 @@ module Codebreaker
     end
 
     def hint
-      if @hints.positive?
-        result = rand(0..3)
-        hint if result == @old_hint
-        @old_hint = result
-        @hints -= 1
-        @secret_code[result]
-      else
-        @old_hint
-      end
+      @hints_list.pop
     end
 
     private
@@ -64,6 +57,7 @@ module Codebreaker
     def attempts_and_hints(var)
       @attempts = var[:attempts]
       @hints = var[:hints]
+      @hints_list = @secret_code.chars.sample(@hints)
     end
 
     def end_game?
