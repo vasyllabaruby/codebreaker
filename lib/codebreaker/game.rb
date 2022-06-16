@@ -12,7 +12,7 @@ module Codebreaker
     include(DataSaver)
     attr_writer :secret_code
     attr_accessor :user_code, :player, :statistic
-    attr_reader :result, :attempts, :hints, :old_hint, :difficulty_values, :hints_list
+    attr_reader :result, :attempts, :hints, :difficulty_values, :hints_list
 
     DIFFICULTY_VALUES = {
       easy: { attempts: 15, hints: 2 },
