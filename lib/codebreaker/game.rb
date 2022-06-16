@@ -48,7 +48,7 @@ module Codebreaker
         @hints -= 1
         @secret_code[result]
       else
-        'you have no hints'
+        @old_hint
       end
     end
 
