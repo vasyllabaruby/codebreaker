@@ -34,11 +34,11 @@ module Codebreaker
     def play(user_code)
       return nil unless ValidateService.code_valid?(user_code)
 
-      @result = []
+      @result = ''
       check(user_code.chars, @secret_code.chars)
       @attempts -= 1
       save_stats if end_game?
-      result.join
+      result
     end
 
     def hint
@@ -59,7 +59,7 @@ module Codebreaker
     end
 
     def end_game?
-      return true if result[0] == '++++ (win)'
+      return true if result == '++++ (win)'
       return true unless @attempts.positive?
 
       false
@@ -82,7 +82,7 @@ module Codebreaker
     end
 
     def check(user_code, secret_code)
-      return @result = ['++++ (win)'] if user_code == secret_code
+      return @result = '++++ (win)' if user_code == secret_code
 
       check_in_same_position(user_code, secret_code)
       check_in_different_position(user_code, secret_code)
@@ -95,7 +95,7 @@ module Codebreaker
 
         user_code[index] = nil
         secret_code[index] = nil
-        @result << '+'
+        @result += '+'
       end
       user_code.compact!
       secret_code.compact!
@@ -107,7 +107,7 @@ module Codebreaker
 
         user_code[user_code.index(secret_code[index])] = 0
         secret_code[index] = -1
-        @result << '-'
+        @result += '-'
       end
     end
   end
