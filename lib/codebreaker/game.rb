@@ -50,13 +50,11 @@ module Codebreaker
     def difficulty_level(difficulty)
       attempts_and_hints(DIFFICULTY_VALUES[difficulty])
       @player.current_difficulty(difficulty)
-      @player.attempts_total = @attempts
-      @player.hints_total = @hints
     end
 
     def attempts_and_hints(var)
-      @attempts = var[:attempts]
-      @hints = var[:hints]
+      @player.attempts_total = @attempts = var[:attempts]
+      @player.hints_total = @hints = var[:hints]
       @hints_list = @secret_code.chars.sample(@hints)
     end
 
