@@ -16,11 +16,11 @@ module Codebreaker
       @difficulty = difficulty
     end
 
-    def attempts_used=(game_attempt)
+    def update_attempts_used(game_attempt)
       @attempts_used = @attempts_total - game_attempt
     end
 
-    def hints_used=(game_hints)
+    def update_hints_used(game_hints)
       @hints_used = @hints_total - game_hints
     end
   end
