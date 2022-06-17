@@ -59,7 +59,7 @@ module Codebreaker
 
     def end_game?
       return true if result == '++++'
-      return true unless @attempts.positive?
+      return true unless @attempts > 1
 
       false
     end
