@@ -83,8 +83,7 @@ module Codebreaker
     def check(user_code, secret_code)
       return '++++' if user_code == secret_code
 
-      @result += check_in_same_position(user_code, secret_code)
-      @result += check_in_different_position(user_code, secret_code)
+      check_in_same_position(user_code, secret_code) + check_in_different_position(user_code, secret_code)
     end
 
     def check_in_same_position(user_code, secret_code)
