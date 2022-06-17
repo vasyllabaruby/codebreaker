@@ -3,17 +3,13 @@
 module Codebreaker
   # Player entity class
   class Player
-    attr_accessor :attempts_total, :hints_total
-    attr_reader :name, :difficulty, :attempts_used, :hints_used
+    attr_accessor :attempts_total, :hints_total, :difficulty
+    attr_reader :name, :attempts_used, :hints_used
 
     def initialize(name)
       @name = name
       @attempts_total = 0
       @hints_total = 0
-    end
-
-    def current_difficulty(difficulty)
-      @difficulty = difficulty
     end
 
     def update_attempts_used(game_attempt)

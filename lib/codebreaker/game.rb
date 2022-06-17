@@ -49,7 +49,7 @@ module Codebreaker
 
     def difficulty_level(difficulty)
       attempts_and_hints(DIFFICULTY_VALUES[difficulty])
-      @player.current_difficulty(difficulty)
+      @player.difficulty = (difficulty)
     end
 
     def attempts_and_hints(difficulty)
@@ -66,8 +66,7 @@ module Codebreaker
     end
 
     def load_stats
-      @statistic = load
-      @statistic = [] if @statistic.nil? || @statistic == false
+      @statistic = load || []
     end
 
     def save_stats
