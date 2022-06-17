@@ -86,7 +86,6 @@ module Codebreaker
 
       check_in_same_position(user_code, secret_code)
       check_in_different_position(user_code, secret_code)
-      @result
     end
 
     def check_in_same_position(user_code, secret_code)
