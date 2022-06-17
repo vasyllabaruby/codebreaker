@@ -83,29 +83,33 @@ module Codebreaker
     def check(user_code, secret_code)
       return @result = '++++ (win)' if user_code == secret_code
 
-      check_in_same_position(user_code, secret_code)
-      check_in_different_position(user_code, secret_code)
+      @result += check_in_same_position(user_code, secret_code)
+      @result += check_in_different_position(user_code, secret_code)
     end
 
     def check_in_same_position(user_code, secret_code)
+      result = ''
       user_code.length.times do |index|
         next unless secret_code[index] == user_code[index]
 
         user_code[index] = nil
         secret_code[index] = nil
-        @result += '+'
+        result += '+'
       end
       user_code.compact!
       secret_code.compact!
+      result
     end
 
     def check_in_different_position(user_code, secret_code)
+      result = ''
       user_code.length.times do |index|
         next unless user_code.include? secret_code[index]
 
         user_code[user_code.index(secret_code[index])] = nil
-        @result += '-'
+        result += '-'
       end
+      result
     end
   end
 end
