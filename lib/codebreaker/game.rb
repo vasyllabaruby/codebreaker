@@ -105,8 +105,7 @@ module Codebreaker
       user_code.length.times do |index|
         next unless user_code.include? secret_code[index]
 
-        user_code[user_code.index(secret_code[index])] = 0
-        secret_code[index] = -1
+        user_code[user_code.index(secret_code[index])] = nil
         @result += '-'
       end
     end
