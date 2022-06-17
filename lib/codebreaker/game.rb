@@ -27,7 +27,7 @@ module Codebreaker
 
     def new_game(name, difficulty)
       generate_secret_code
-      @player = ::Codebreaker::Player.new(name)
+      @player = Player.new(name)
       difficulty_level(difficulty)
     end
 
