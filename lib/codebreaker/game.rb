@@ -38,7 +38,6 @@ module Codebreaker
       @result = ''
       check(user_code.chars, @secret_code.chars)
       @attempts -= 1
-      save_stats if end_game?
       result
     end
 
@@ -76,7 +75,6 @@ module Codebreaker
       @player.update_hints_used(@hints)
       @statistic.append(@player)
       save(@statistic)
-      play(@secret_code)
     end
 
     def generate_secret_code
