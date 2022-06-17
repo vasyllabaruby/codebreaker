@@ -35,8 +35,7 @@ module Codebreaker
       return @secret_code if end_game?
       return nil unless ValidateService.code_valid?(user_code)
 
-      @result = ''
-      check(user_code.chars, @secret_code.chars)
+      @result = check(user_code.chars, @secret_code.chars)
       @attempts -= 1
       result
     end
@@ -59,7 +58,7 @@ module Codebreaker
     end
 
     def end_game?
-      return true if result == '++++ (win)'
+      return true if result == '++++'
       return true unless @attempts.positive?
 
       false
