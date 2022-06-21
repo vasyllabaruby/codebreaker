@@ -44,6 +44,12 @@ module Codebreaker
       @hints_list.pop
     end
 
+    def name_input(name)
+      return @player = Player.new(name) if ValidateService.name_valid?(name)
+
+      false
+    end
+
     private
 
     def difficulty_level(difficulty)
