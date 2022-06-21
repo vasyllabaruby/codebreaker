@@ -53,7 +53,6 @@ module Codebreaker
     def difficulty_check(difficulty)
       diff = %i[easy medium hell]
       false unless diff.include(difficulty.to_sym)
-
     end
 
     private
