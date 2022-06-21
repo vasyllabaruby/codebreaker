@@ -44,10 +44,16 @@ module Codebreaker
       @hints_list.pop
     end
 
-    def name_input(name)
+    def name_check(name)
       return @player = Player.new(name) if ValidateService.name_valid?(name)
 
       false
+    end
+
+    def difficulty_check(difficulty)
+      diff = %i[easy medium hell]
+      false unless diff.include(difficulty.to_sym)
+
     end
 
     private
