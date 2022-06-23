@@ -32,7 +32,7 @@ module Codebreaker
     end
 
     def play(user_code)
-      return @secret_code if end_game?
+      return save_stats if end_game?
       return nil unless ValidateService.code_valid?(user_code)
 
       @result = check(user_code.chars, @secret_code.chars)
@@ -86,6 +86,7 @@ module Codebreaker
       @player.update_hints_used(@hints)
       @statistic.append(@player)
       save(@statistic)
+      @secret_code
     end
 
     def generate_secret_code
