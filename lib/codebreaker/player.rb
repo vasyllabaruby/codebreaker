@@ -6,7 +6,11 @@ module Codebreaker
     attr_accessor :attempts_total, :hints_total, :difficulty
     attr_reader :name, :attempts_used, :hints_used
 
-    HEADING = ['Rating', 'Name', 'Difficulty', 'Attempts Total', 'Attempts Used', 'Hints Total', 'Hints Used']
+    HEADING = ['Name', 'Difficulty', 'Attempts Total', 'Attempts Used', 'Hints Total', 'Hints Used'].freeze
+
+    def rows
+      [@name, @difficulty, @attempts_total, @attempts_used, @hints_total, @hints_used]
+    end
 
     def initialize(name)
       @name = name
