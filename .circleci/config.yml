@@ -1,0 +1,56 @@
+version: 2.1
+
+executors:
+  default:
+    docker:
+      - image: cimg/ruby:3.1.2
+
+caches:
+  - &bundle_cache v2-repo-
+
+commands:
+  defaults:
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - *bundle_cache
+      - run: bundle install
+      - save_cache:
+          key: *bundle_cache
+          paths:
+            - vendor/bundle
+  run_linters:
+    steps:
+      - run:
+          name: rubocop
+          command: rubocop
+      - run:
+          name: fasterer
+          command: fasterer
+  run_specs:
+    steps:
+      - run:
+          name: run specs
+          command: rspec
+
+jobs:
+  lintering:
+    docker:
+      - image: cimg/ruby:3.1.2
+    steps:
+      - defaults
+      - run_linters
+  run_specs:
+    executor: default
+    steps:
+      - defaults
+      - run_specs
+
+workflows:
+  build:
+    jobs:
+      - lintering
+      - run_specs:
+          requires:
+            - lintering
