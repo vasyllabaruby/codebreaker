@@ -84,6 +84,7 @@ module Codebreaker
     def save_stats
       @player.update_attempts_used(@attempts)
       @player.update_hints_used(@hints)
+      @player.time(DateTime.now.strftime('%Y.%m.%d - %T'))
       @statistic.append(@player)
       save(@statistic)
       @secret_code
