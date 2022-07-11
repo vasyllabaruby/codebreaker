@@ -5,7 +5,6 @@ require 'json'
 require 'codebreaker/game'
 
 RSpec.describe 'Player' do
-
   let(:mario) do
     player = Codebreaker::Player.new('Mario')
     player.difficulty = :easy
@@ -15,12 +14,6 @@ RSpec.describe 'Player' do
     player.update_hints_used(2)
     player.time = DateTime.new(2022, 7, 11, 20, 26, 27).strftime('%Y.%m.%d - %T')
     player
-  end
-
-  it 'Player set time' do
-    player = Codebreaker::Player.new('Tester')
-    player.time = DateTime.now
-    expect(time).to eq(player.time)
   end
 
   it 'Player rows work as expected' do
