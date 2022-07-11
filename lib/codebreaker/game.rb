@@ -36,7 +36,8 @@ module Codebreaker
 
       @result = check(user_code.chars, @secret_code.chars)
       @attempts -= 1
-      save_stats if end_game?
+      save_stats if win?
+      end_game if attempts_gone?
       @result
     end
 
@@ -70,9 +71,14 @@ module Codebreaker
       @hints_list = @secret_code.chars.sample(@hints)
     end
 
-    def end_game?
+    def win?
       return true if result == '++++'
-      return true unless @attempts > 1
+
+      false
+    end
+
+    def attempts_gone?
+      return true unless @attempts.positive?
 
       false
     end
@@ -81,13 +87,18 @@ module Codebreaker
       @statistic = load || []
     end
 
+    def end_game
+      save_stats
+      @result = @secret_code
+    end
+
     def save_stats
       @player.update_attempts_used(@attempts)
       @player.update_hints_used(@hints)
       @player.time = (DateTime.now.strftime('%Y.%m.%d - %T'))
       @statistic.append(@player)
       save(@statistic)
-      @secret_code
+      @result
     end
 
     def generate_secret_code
