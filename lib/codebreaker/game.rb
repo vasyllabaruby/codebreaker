@@ -87,7 +87,7 @@ module Codebreaker
       @player.time = (DateTime.now.strftime('%Y.%m.%d - %T'))
       @statistic.append(@player)
       save(@statistic)
-      @secret_code
+      @result = @secret_code
     end
 
     def generate_secret_code
