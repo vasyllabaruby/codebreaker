@@ -3,6 +3,7 @@
 require 'rspec'
 require 'json'
 require 'codebreaker/game'
+require 'date'
 
 RSpec.describe 'Player' do
   let(:mario) do
