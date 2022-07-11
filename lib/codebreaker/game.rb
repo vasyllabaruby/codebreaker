@@ -42,6 +42,7 @@ module Codebreaker
     end
 
     def hint
+      @hints -= 1
       @hints_list.pop
     end
 
