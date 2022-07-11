@@ -32,12 +32,12 @@ module Codebreaker
     end
 
     def play(user_code)
-      return save_stats if end_game?
       return nil unless ValidateService.code_valid?(user_code)
 
       @result = check(user_code.chars, @secret_code.chars)
       @attempts -= 1
-      result
+      save_stats if end_game?
+      @result
     end
 
     def hint
@@ -84,7 +84,7 @@ module Codebreaker
     def save_stats
       @player.update_attempts_used(@attempts)
       @player.update_hints_used(@hints)
-      @player.time(DateTime.now.strftime('%Y.%m.%d - %T'))
+      @player.time = (DateTime.now.strftime('%Y.%m.%d - %T'))
       @statistic.append(@player)
       save(@statistic)
       @secret_code
