@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
+require 'time'
+
 module Codebreaker
   # Player entity class
   class Player
-    attr_accessor :attempts_total, :hints_total, :difficulty
+    attr_accessor :attempts_total, :hints_total, :difficulty, :time
     attr_reader :name, :attempts_used, :hints_used
 
-    HEADING = ['Name', 'Difficulty', 'Attempts Total', 'Attempts Used', 'Hints Total', 'Hints Used'].freeze
+    HEADING = ['Name', 'Difficulty', 'Attempts Total', 'Attempts Used', 'Hints Total', 'Hints Used', 'Time'].freeze
 
     def rows
-      [@name, @difficulty, @attempts_total, @attempts_used, @hints_total, @hints_used]
+      [@name, @difficulty, @attempts_total, @attempts_used, @hints_total, @hints_used, @time]
     end
 
     def initialize(name)
